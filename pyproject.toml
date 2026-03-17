@@ -52,6 +52,8 @@ dependencies = [
     "confluent-kafka[avro,schema-registry]>=2.3.0",
     "questionary>=2.0.0",
     "rich>=13.0.0",
+    "fastapi>=0.110.0",
+    "uvicorn[standard]>=0.29.0",
 ]
 
 # Optional dependencies for enhanced functionality
@@ -87,6 +89,9 @@ lab4-datagen = "scripts.lab4_datagen:main"
 #
 sepsisshield_datagen = "scripts.sepsisshield_datagen:main"
 sepsisshield-datagen = "scripts.sepsisshield_datagen:main"
+#
+sepsisshield_ui = "scripts.sepsisshield_ui:main"
+sepsisshield-ui = "scripts.sepsisshield_ui:main"
 #
 publish_lab3_data = "scripts.publish_lab3_data:main"
 publish-lab3-data = "scripts.publish_lab3_data:main"
