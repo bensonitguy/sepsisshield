@@ -649,7 +649,8 @@ updateClock();
 
 // ── WebSocket ──────────────────────────────────────────────────────────────────
 function connect() {
-  const ws = new WebSocket(`ws://${location.host}/ws`);
+  const wsProto = location.protocol === 'https:' ? 'wss' : 'ws';
+  const ws = new WebSocket(`${wsProto}://${location.host}/ws`);
   ws.onopen  = () => {
     isLive = true;
     document.getElementById('conn-status').className = 'conn-live';
@@ -894,6 +895,10 @@ def main():
         tv.start()
         ta.start()
         print("   Subscribed to: patient_vitals, clinical_alerts")
+        # Pre-seed vitals_state with simulated data so the UI isn't blank
+        # while waiting for the first Kafka messages to arrive
+        t_seed = threading.Thread(target=run_simulator, daemon=True)
+        t_seed.start()
 
     print(f"\n🛡️  SepsisShield Dashboard → http://localhost:{args.port}\n")
     uvicorn.run(app, host="0.0.0.0", port=args.port, log_level="warning")
