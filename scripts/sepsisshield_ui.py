@@ -387,7 +387,7 @@ async def broadcast_loop():
                     await ws.send_text(payload)
                 except Exception:
                     dead.add(ws)
-            connected_ws -= dead
+            connected_ws.difference_update(dead)
         await asyncio.sleep(3)
 
 
