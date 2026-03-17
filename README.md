@@ -5,6 +5,14 @@
 
 ---
 
+## Live Demo
+
+[![Watch the SepsisShield Demo](https://cdn.loom.com/sessions/thumbnails/723f7cfd224040979d22d805a7a7588a-with-play.gif)](https://www.loom.com/share/723f7cfd224040979d22d805a7a7588a)
+
+*20-patient ICU dashboard with real-time vital signs, AI-generated sepsis alerts, qSOFA scoring, and protocol recommendations — running locally against a live Confluent Cloud Flink pipeline.*
+
+---
+
 ## Live Pipeline — Confluent Stream Lineage
 
 [![SepsisShield Stream Lineage](https://i.ibb.co/k6WK6zbK/cluster-lkc-0008zq-lineage.png)](https://ibb.co/1JwZJByZ)

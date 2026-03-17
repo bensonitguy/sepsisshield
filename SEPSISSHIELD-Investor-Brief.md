@@ -5,6 +5,14 @@
 
 ---
 
+## Live Demo
+
+[![Watch the SepsisShield Demo](https://cdn.loom.com/sessions/thumbnails/723f7cfd224040979d22d805a7a7588a-with-play.gif)](https://www.loom.com/share/723f7cfd224040979d22d805a7a7588a)
+
+*20-patient ICU dashboard with real-time vital signs, AI-generated sepsis alerts, qSOFA scoring, and clinical protocol recommendations — running against a live Confluent Cloud Flink pipeline.*
+
+---
+
 ## The Crisis: Sepsis Is the Deadliest Condition Most Americans Have Never Heard Of
 
 Sepsis is the body's life-threatening response to infection — and it is the **#1 cause of in-hospital death** in the United States. The numbers are devastating:
