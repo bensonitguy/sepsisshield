@@ -11,6 +11,12 @@
 
 *20-patient ICU dashboard with real-time vital signs, AI-generated sepsis alerts, qSOFA scoring, and clinical protocol recommendations — running against a live Confluent Cloud Flink pipeline.*
 
+### Dashboard Screenshot
+
+![SepsisShield ICU Dashboard](assets/dashboard-screenshot.png)
+
+*Real-time ICU monitoring: 20 patients across MICU / SICU / NEURO units — septic shock patients highlighted in red, live AI alerts panel on the right with qSOFA scores and immediate clinical actions.*
+
 ---
 
 ## The Crisis: Sepsis Is the Deadliest Condition Most Americans Have Never Heard Of
