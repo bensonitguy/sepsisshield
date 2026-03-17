@@ -7,7 +7,7 @@
 
 ## Live Demo
 
-[![Watch the SepsisShield Demo](https://cdn.loom.com/sessions/thumbnails/723f7cfd224040979d22d805a7a7588a-with-play.gif)](https://www.loom.com/share/723f7cfd224040979d22d805a7a7588a)
+**[▶ Watch the SepsisShield Demo on Loom](https://www.loom.com/share/723f7cfd224040979d22d805a7a7588a)**
 
 *20-patient ICU dashboard with real-time vital signs, AI-generated sepsis alerts, qSOFA scoring, and protocol recommendations — running locally against a live Confluent Cloud Flink pipeline.*
 
