@@ -3,7 +3,8 @@
 
 > *"Every hour of delayed sepsis treatment increases mortality by 7%. SepsisShield eliminates that delay — permanently."*
 
-> 🏆 **Submitted for: Most Business-Impactful AI App**
+> 🏆 **Submitted for: Most Flink-Driven App**
+> *The only submission chaining `ML_DETECT_ANOMALIES` + `VECTOR_SEARCH_AGG` + `AI_RUN_AGENT` in a single Flink SQL pipeline — processing ICU patient vitals end-to-end in under 10 seconds with no custom code outside of Flink.*
 
 ---
 
@@ -125,6 +126,38 @@ Live Vital Signs (Kafka stream)
 > - Apply norepinephrine if MAP <65 mmHg persists
 >
 > **Attending Paged:** Dr. Chen (ICU) | Rapid Response Team: Notified
+
+---
+
+## Why This Is the Most Flink-Driven App
+
+SepsisShield doesn't use Flink as a transport layer — **Flink SQL is the entire brain of the system.** Five advanced Confluent Flink capabilities are chained in a single pipeline, with no intermediate microservices or custom code:
+
+| Flink Capability | How SepsisShield Uses It |
+|---|---|
+| **`ML_DETECT_ANOMALIES`** | Per-patient ARIMA time-series anomaly detection on HR and respiratory rate — learns each patient's individual baseline, no hard-coded thresholds |
+| **`VECTOR_SEARCH_AGG`** | Semantic retrieval of Sepsis-3, Hour-1 Bundle, NEWS2, and vasopressor protocols from MongoDB — matched to each patient's exact deterioration pattern |
+| **`CREATE AGENT` / `AI_RUN_AGENT`** | Streaming AI agent (Claude Sonnet via AWS Bedrock) that computes qSOFA scores, classifies WATCH / CONCERN / SEPSIS / SHOCK, and generates bedside action plans |
+| **Tumbling window aggregations** | 5-minute watermarked windows per patient with `RANGE OVER` clauses feeding the anomaly detector |
+| **Multi-stage CTAS pipeline** | 6 chained materialized tables: `patient_vitals` → `patient_vitals_windowed` → `vitals_anomalies` → `anomalies_enriched` → `clinical_alerts` |
+
+```
+patient_vitals (Kafka)
+    │
+    ▼ [Flink Tumbling Window + Watermark]
+patient_vitals_windowed
+    │
+    ▼ [ML_DETECT_ANOMALIES — ARIMA per patient]
+vitals_anomalies
+    │
+    ▼ [VECTOR_SEARCH_AGG — MongoDB RAG]
+anomalies_enriched
+    │
+    ▼ [AI_RUN_AGENT — Claude Sonnet Streaming Agent]
+clinical_alerts (Kafka)
+```
+
+**End-to-end latency: < 10 seconds from vital sign change to bedside alert. Zero microservices. Pure Flink SQL.**
 
 ---
 

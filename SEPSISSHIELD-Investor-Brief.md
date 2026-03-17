@@ -3,7 +3,8 @@
 
 > *"Every hour of delayed sepsis treatment increases mortality by 7%. SepsisShield eliminates that delay — permanently."*
 
-> 🏆 **Submitted for: Most Business-Impactful AI App**
+> 🏆 **Submitted for: Most Flink-Driven App**
+> *The only submission chaining `ML_DETECT_ANOMALIES` + `VECTOR_SEARCH_AGG` + `AI_RUN_AGENT` in a single Flink SQL pipeline — processing ICU patient vitals end-to-end in under 10 seconds.*
 
 ---
 
