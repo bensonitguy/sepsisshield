@@ -224,7 +224,9 @@ Three forces have converged in 2025–2026 to make SepsisShield possible and urg
 
 ---
 
-## Impact Summary
+## Impact & Financial Forecast
+
+### Clinical Impact
 
 | Dimension | Impact |
 |---|---|
@@ -233,6 +235,20 @@ Three forces have converged in 2025–2026 to make SepsisShield possible and urg
 | Societal economic value | **$3.3 billion/year** in prevented deaths (VSL basis) |
 | Nurse alarm fatigue reduction | **~70%** fewer false positives |
 | Time-to-treatment improvement | **45-minute average reduction** |
+
+### 5-Year Revenue & Lives Saved
+
+| Year | ICU Beds | ARR | Lives Saved/yr |
+|---|---|---|---|
+| 2026 | 100 | $120K | ~100 |
+| 2027 | 2,000 | $2.4M | ~2,000 |
+| 2028 | 10,000 | $14M | ~10,000 |
+| 2029 | 30,000 | $42M | ~30,000 |
+| 2030 | 60,000 | **$90M** | **~54,000** |
+
+*88% gross margin · 13:1 LTV:CAC · 9-month payback period*
+
+**At full U.S. market penetration: SepsisShield saves more lives per year than are lost annually to breast cancer.**
 
 ---
 

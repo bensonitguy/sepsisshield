@@ -228,6 +228,47 @@ Three forces have converged in 2025–2026 to make SepsisShield possible and urg
 
 ---
 
+## 5-Year Financial Forecast
+
+### Revenue Projections
+
+| Year | ICU Beds Under Contract | ARR | Cumulative Revenue |
+|---|---|---|---|
+| 2026 (Seed) | 100 beds (3 pilot ICUs) | **$120K** | $120K |
+| 2027 (Series A) | 2,000 beds (20 health systems) | **$2.4M** | $2.5M |
+| 2028 | 10,000 beds + enterprise licenses | **$14M** | $16.5M |
+| 2029 | 30,000 beds + payer contracts | **$42M** | $58.5M |
+| 2030 | 60,000 beds (60% U.S. ICU market) | **$90M** | $148.5M |
+
+*SaaS pricing: $10/ICU bed/month. Enterprise licenses ($150K–$500K/year) and shared-savings payer contracts add an additional 30–40% on top of SaaS from Year 3.*
+
+### Unit Economics at Scale
+
+| Metric | Value |
+|---|---|
+| Cost to serve per bed/month | ~$1.20 (infra + LLM tokens) |
+| Gross margin at scale | **~88%** |
+| CAC (health system) | ~$45,000 |
+| LTV (5-year, 100-bed ICU) | ~$600,000 |
+| LTV : CAC ratio | **13:1** |
+| Payback period | ~9 months |
+
+### Lives Saved Forecast (U.S.)
+
+| Year | ICU Beds Covered | Sepsis Cases Monitored/yr | Lives Saved/yr (est.) |
+|---|---|---|---|
+| 2026 | 100 | ~500 | ~**100** |
+| 2027 | 2,000 | ~10,000 | ~**2,000** |
+| 2028 | 10,000 | ~50,000 | ~**10,000** |
+| 2029 | 30,000 | ~150,000 | ~**30,000** |
+| 2030 | 60,000 | ~300,000 | ~**54,000** |
+
+*Based on 1.7M annual U.S. sepsis cases across ~97,000 ICU beds, 20% mortality reduction at full deployment, and pro-rata scaling by beds covered.*
+
+**At full U.S. market penetration: SepsisShield saves more lives per year than are lost annually to breast cancer.**
+
+---
+
 ## The Ask
 
 We are raising a **$3.5M Seed Round** to:
