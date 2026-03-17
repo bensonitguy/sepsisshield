@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: sepsisshield
+    runtime: python
+    region: oregon
+    plan: free
+    buildCommand: pip install uv && uv sync
+    startCommand: uv run sepsisshield_ui
+    healthCheckPath: /
+    envVars:
+      # Render injects PORT automatically — the app reads it via $PORT
+      - key: PYTHON_VERSION
+        value: "3.11"
+      # --- Confluent Cloud credentials (set these in the Render dashboard) ---
+      # - key: KAFKA_BOOTSTRAP_SERVERS
+      #   value: <your-bootstrap-server>
+      # - key: KAFKA_API_KEY
+      #   value: <your-kafka-api-key>
+      # - key: KAFKA_API_SECRET
+      #   value: <your-kafka-api-secret>
+      # - key: SCHEMA_REGISTRY_URL
+      #   value: <your-schema-registry-url>
+      # - key: SCHEMA_REGISTRY_API_KEY
+      #   value: <your-sr-api-key>
+      # - key: SCHEMA_REGISTRY_API_SECRET
+      #   value: <your-sr-api-secret>

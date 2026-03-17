@@ -244,6 +244,36 @@ We are raising a **$3.5M Seed Round** to:
 
 ---
 
+## Running the Dashboard
+
+### Local (simulation mode — no credentials needed)
+```bash
+git clone https://github.com/bensonitguy/sepsisshield.git
+cd sepsisshield
+pip install uv && uv sync
+uv run sepsisshield_ui --simulate
+```
+Open `http://localhost:8765`
+
+### Local (live Kafka mode)
+```bash
+export KAFKA_BOOTSTRAP_SERVERS=<your-bootstrap-server>
+export KAFKA_API_KEY=<your-api-key>
+export KAFKA_API_SECRET=<your-api-secret>
+export SCHEMA_REGISTRY_URL=<your-sr-url>
+export SCHEMA_REGISTRY_API_KEY=<your-sr-api-key>
+export SCHEMA_REGISTRY_API_SECRET=<your-sr-api-secret>
+uv run sepsisshield_ui
+```
+
+### Deploy to Render.com (free)
+1. Fork this repo on GitHub
+2. Go to [render.com](https://render.com) → **New → Web Service** → connect your fork
+3. Render auto-detects `render.yaml` — click **Deploy**
+4. Add the 6 Confluent Cloud env vars above in **Environment → Secret Files** (or leave unset to run in simulation mode)
+
+---
+
 > *"Sepsis does not wait. Neither does SepsisShield."*
 
 ---

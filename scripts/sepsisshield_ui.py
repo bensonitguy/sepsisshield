@@ -129,6 +129,30 @@ def auto_detect_cloud_provider(project_root: Optional[Path] = None) -> str:
             pass
     return "aws"
 
+
+def _creds_from_env() -> Optional[dict]:
+    """Load Kafka + Schema Registry credentials from environment variables.
+
+    Set these in Render (or any hosting) dashboard:
+        KAFKA_BOOTSTRAP_SERVERS
+        KAFKA_API_KEY
+        KAFKA_API_SECRET
+        SCHEMA_REGISTRY_URL
+        SCHEMA_REGISTRY_API_KEY
+        SCHEMA_REGISTRY_API_SECRET
+    """
+    required = {
+        "bootstrap_servers":        os.environ.get("KAFKA_BOOTSTRAP_SERVERS"),
+        "kafka_api_key":            os.environ.get("KAFKA_API_KEY"),
+        "kafka_api_secret":         os.environ.get("KAFKA_API_SECRET"),
+        "schema_registry_url":      os.environ.get("SCHEMA_REGISTRY_URL"),
+        "schema_registry_api_key":  os.environ.get("SCHEMA_REGISTRY_API_KEY"),
+        "schema_registry_api_secret": os.environ.get("SCHEMA_REGISTRY_API_SECRET"),
+    }
+    if all(required.values()):
+        return required
+    return None
+
 # ── Patient roster (mirrors sepsisshield_datagen.py) ──────────────────────────
 PATIENTS = [
     {"id": "PT-001", "name": "Robert Smith",      "unit": "MICU",  "bed": "B01", "age": 68, "dx": "Septic shock - recovering"},
@@ -837,21 +861,27 @@ def main():
     parser = argparse.ArgumentParser(description="SepsisShield Local Dashboard")
     parser.add_argument("cloud", nargs="?", help="Cloud provider (aws/azure)")
     parser.add_argument("--simulate", action="store_true", help="Force offline simulation mode")
-    parser.add_argument("--port", type=int, default=8765, help="HTTP port (default: 8765)")
+    parser.add_argument("--port", type=int, default=int(os.environ.get("PORT", 8765)), help="HTTP port (default: 8765 or $PORT)")
     args = parser.parse_args()
 
     simulate = args.simulate
     creds    = None
 
     if not simulate:
-        try:
-            cloud = args.cloud or auto_detect_cloud_provider(get_project_root())
-            creds = extract_kafka_credentials(cloud, get_project_root())
-            print(f"✓ Connected to Confluent Cloud ({cloud})")
-        except Exception as e:
-            print(f"⚠  Could not load Kafka credentials: {e}")
-            print("   Falling back to simulation mode.")
-            simulate = True
+        # First try env vars (used on Render / any cloud hosting)
+        env_creds = _creds_from_env()
+        if env_creds:
+            creds = env_creds
+            print("✓ Loaded Confluent Cloud credentials from environment variables")
+        else:
+            try:
+                cloud = args.cloud or auto_detect_cloud_provider(get_project_root())
+                creds = extract_kafka_credentials(cloud, get_project_root())
+                print(f"✓ Connected to Confluent Cloud ({cloud})")
+            except Exception as e:
+                print(f"⚠  Could not load Kafka credentials: {e}")
+                print("   Falling back to simulation mode.")
+                simulate = True
 
     if simulate or not creds:
         print("▶  Running in SIMULATION mode (no Kafka required)")
