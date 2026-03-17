@@ -3,6 +3,8 @@
 
 > *"Every hour of delayed sepsis treatment increases mortality by 7%. SepsisShield eliminates that delay — permanently."*
 
+> 🏆 **Submitted for: Most Business-Impactful AI App**
+
 ---
 
 ## Live Demo
