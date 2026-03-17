@@ -51,8 +51,83 @@ try:
 except ImportError:
     CONFLUENT_KAFKA_AVAILABLE = False
 
-from .common.terraform import extract_kafka_credentials, get_project_root
-from .common.cloud_detection import auto_detect_cloud_provider
+import os
+import subprocess
+
+
+def get_project_root() -> Path:
+    """Find project root by walking up from cwd looking for pyproject.toml."""
+    for parent in [Path.cwd()] + list(Path.cwd().parents):
+        if (parent / "pyproject.toml").exists():
+            return parent
+    for parent in [Path(__file__).resolve()] + list(Path(__file__).resolve().parents):
+        if (parent / "pyproject.toml").exists():
+            return parent
+    raise FileNotFoundError("Could not find project root (no pyproject.toml found)")
+
+
+def _run_terraform_output(state_path: Path) -> dict:
+    result = subprocess.run(
+        ["terraform", "output", "-json", f"-state={state_path}"],
+        capture_output=True, text=True, check=True,
+    )
+    raw = json.loads(result.stdout)
+    return {k: v["value"] for k, v in raw.items()}
+
+
+def extract_kafka_credentials(cloud_provider: str, project_root: Optional[Path] = None) -> dict:
+    if project_root is None:
+        project_root = get_project_root()
+    tf_dir = project_root / "terraform"
+    core_state  = tf_dir / "core" / "terraform.tfstate"
+    local_state = tf_dir / "lab2-vector-search" / "terraform.tfstate"
+    if not core_state.exists():
+        raise FileNotFoundError(f"Core terraform state not found: {core_state}")
+    core_out  = _run_terraform_output(core_state)
+    local_out = _run_terraform_output(local_state) if local_state.exists() else {}
+    merged = {**local_out, **core_out}
+    mapping = {
+        "confluent_kafka_cluster_bootstrap_endpoint":  "bootstrap_servers",
+        "app_manager_kafka_api_key":                   "kafka_api_key",
+        "app_manager_kafka_api_secret":                "kafka_api_secret",
+        "confluent_schema_registry_rest_endpoint":     "schema_registry_url",
+        "app_manager_schema_registry_api_key":         "schema_registry_api_key",
+        "app_manager_schema_registry_api_secret":      "schema_registry_api_secret",
+        "confluent_environment_display_name":          "environment_name",
+        "confluent_kafka_cluster_display_name":        "cluster_name",
+        "confluent_environment_id":                    "environment_id",
+        "confluent_kafka_cluster_id":                  "cluster_id",
+    }
+    creds = {}
+    missing = []
+    for tf_key, cred_key in mapping.items():
+        if tf_key in merged:
+            creds[cred_key] = merged[tf_key]
+        else:
+            missing.append(tf_key)
+    if missing:
+        raise KeyError(f"Missing terraform outputs: {missing}")
+    return creds
+
+
+def auto_detect_cloud_provider(project_root: Optional[Path] = None) -> str:
+    """Detect cloud provider from terraform state files or env vars."""
+    if project_root is None:
+        project_root = get_project_root()
+    hint = os.environ.get("CLOUD_PROVIDER", "").lower()
+    if hint in ("aws", "azure"):
+        return hint
+    tf_dir = project_root / "terraform"
+    if (tf_dir / "core" / "terraform.tfstate").exists():
+        try:
+            out = _run_terraform_output(tf_dir / "core" / "terraform.tfstate")
+            if any("aws" in k for k in out):
+                return "aws"
+            if any("azure" in k for k in out):
+                return "azure"
+        except Exception:
+            pass
+    return "aws"
 
 # ── Patient roster (mirrors sepsisshield_datagen.py) ──────────────────────────
 PATIENTS = [
