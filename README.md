@@ -5,6 +5,14 @@
 
 ---
 
+## Live Pipeline — Confluent Stream Lineage
+
+[![SepsisShield Stream Lineage](https://i.ibb.co/k6WK6zbK/cluster-lkc-0008zq-lineage.png)](https://ibb.co/1JwZJByZ)
+
+*Real-time data pipeline: `patient_vitals` → windowed aggregation → `ML_DETECT_ANOMALIES` → vector search enrichment → AI streaming agent → `clinical_alerts`*
+
+---
+
 ## The Crisis: Sepsis Is the Deadliest Condition Most Americans Have Never Heard Of
 
 Sepsis is the body's life-threatening response to infection — and it is the **#1 cause of in-hospital death** in the United States. The numbers are devastating:
